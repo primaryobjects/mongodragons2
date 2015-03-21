@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BA149121-4E65-4E39-8D56-99DA6CE41E90}</ProjectGuid>
+    <ProjectGuid>{A38C0336-477E-4F2C-B0E6-EB629C2534A1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MongoDragons2.Repository</RootNamespace>
-    <AssemblyName>MongoDragons2.Repository</AssemblyName>
+    <RootNamespace>MongoDragons2.Database</RootNamespace>
+    <AssemblyName>MongoDragons2.Database</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -37,6 +37,7 @@
       <HintPath>..\packages\mongocsharpdriver.1.10.0\lib\net35\MongoDB.Driver.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,21 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DragonRepository.cs" />
+    <Compile Include="Concrete\MongoDatabase.cs" />
+    <Compile Include="Helpers\PagingExtensions.cs" />
+    <Compile Include="Interface\IDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MongoDragons2.Database\MongoDragons2.Database.csproj">
-      <Project>{a38c0336-477e-4f2c-b0e6-eb629c2534a1}</Project>
-      <Name>MongoDragons2.Database</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MongoDragons2.Types\MongoDragons2.Types.csproj">
-      <Project>{15494778-500f-4c31-8d8e-bf6f91f60570}</Project>
-      <Name>MongoDragons2.Types</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

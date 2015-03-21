@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MongoDragons2.Repository.Interface;
 using MongoDragons2.Types;
+using MongoDragons2.Database.Interface;
+using MongoDragons2.Database.Concrete;
 
-namespace MongoDragons2.Repository.Concrete
+namespace MongoDragons2.Repository
 {
     public static class DragonRepository
     {
-        private static IRepository<Dragon> _repository = new MongoRepository<Dragon>("Dragon");
+        private static IDatabase<Dragon> _repository = new MongoDatabase<Dragon>("Dragon");
 
         public static Dragon Spawn()
         {

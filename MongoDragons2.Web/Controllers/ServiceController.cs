@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MongoDragons2.Repository.Concrete;
+using MongoDragons2.Repository;
 using MongoDragons2.Types;
 
 namespace MongoDragons2.Web.Controllers
@@ -21,7 +21,9 @@ namespace MongoDragons2.Web.Controllers
         [HttpPost]
         public JsonResult Spawn()
         {
-            Dragon dragon = DragonRepository.Spawn();
+            // Commented out for demo.
+            // Dragon dragon = DragonRepository.Spawn();
+            Dragon dragon = new Dragon() { Name = "Test", Age = 10, Gold = 100 };
 
             return Json(dragon);
         }
@@ -29,7 +31,9 @@ namespace MongoDragons2.Web.Controllers
         [HttpPost]
         public JsonResult Remove(Dragon dragon)
         {
-            bool result = DragonRepository.Remove(dragon);
+            // Commented out for demo.
+            // bool result = DragonRepository.Remove(dragon);
+            bool result = true;
 
             return Json(result);
         }

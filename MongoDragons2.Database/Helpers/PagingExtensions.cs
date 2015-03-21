@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MongoDragons2.Repository.Helpers
+namespace MongoDragons2.Database.Helpers
 {
     public static class PagingExtensions
     {

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MongoDragons2.Types;
-using MongoDragons2.Repository.Concrete;
 
 namespace MongoDragons2.Web.Controllers
 {

@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MongoDragons2.Repository.Interface
+namespace MongoDragons2.Database.Interface
 {
-    public interface IRepository<T> where T : class, new()
+    public interface IDatabase<T> where T : class, new()
     {
         int Delete(Expression<Func<T, bool>> expression);
         bool Delete(T item);

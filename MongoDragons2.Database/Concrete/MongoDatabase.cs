@@ -8,12 +8,12 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using builder = MongoDB.Driver.Builders;
-using MongoDragons2.Repository.Interface;
-using MongoDragons2.Repository.Helpers;
+using MongoDragons2.Database.Interface;
+using MongoDragons2.Database.Helpers;
 
-namespace MongoDragons2.Repository.Concrete
+namespace MongoDragons2.Database.Concrete
 {
-    internal class MongoRepository<T> : IRepository<T> where T : class, new()
+    public class MongoDatabase<T> : IDatabase<T> where T : class, new()
     {
         private static string _connectionString = ConfigurationManager.ConnectionStrings["db"].ConnectionString;
         private static MongoServer _server = new MongoClient(_connectionString).GetServer();
@@ -44,7 +44,7 @@ namespace MongoDragons2.Repository.Concrete
             }
         }
 
-        public MongoRepository(string collectionName)
+        public MongoDatabase(string collectionName)
         {
             _collectionName = collectionName;
             _db = _server.GetDatabase(MongoUrl.Create(_connectionString).DatabaseName);
