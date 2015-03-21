@@ -9,31 +9,31 @@ using MongoDragons2.Database.Concrete;
 
 namespace MongoDragons2.Repository
 {
-    public static class DragonRepository
+public static class DragonRepository
+{
+    private static IDatabase<Dragon> _db = new MongoDatabase<Dragon>("Dragon");
+
+    public static Dragon Spawn()
     {
-        private static IDatabase<Dragon> _repository = new MongoDatabase<Dragon>("Dragon");
+        Dragon dragon = new Dragon() { Name = "Test", Age = 10, Gold = 100 };
 
-        public static Dragon Spawn()
+        // Save object.
+        if (!_db.Add(dragon))
         {
-            Dragon dragon = new Dragon() { Name = "Test", Age = 10, Gold = 100 };
-
-            // Save object.
-            if (!_repository.Add(dragon))
-            {
-                dragon = null;
-            }
-
-            return dragon;
+            dragon = null;
         }
 
-        public static bool Remove(Dragon dragon)
-        {
-            return _repository.Delete(dragon);
-        }
-
-        public static IEnumerable<Dragon> ToList()
-        {
-            return _repository.Query.AsEnumerable();
-        }
+        return dragon;
     }
+
+    public static bool Remove(Dragon dragon)
+    {
+        return _db.Delete(dragon);
+    }
+
+    public static IEnumerable<Dragon> ToList()
+    {
+        return _db.Query.AsEnumerable();
+    }
+}
 }
