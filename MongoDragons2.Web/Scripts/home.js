@@ -1,7 +1,14 @@
-﻿var app = angular.module('homeApplication', []);
+var app = angular.module('homeApplication', []);
 
-app.controller('homeController', function ($scope, $http) {
-    $http.get('/service/dragons').success(function (data) {
+// Route configuration.
+app.config(['$locationProvider', function ($locationProvider) {
+    $locationProvider.html5Mode(true);
+}]);
+
+app.controller('homeController', function ($scope, $http, $location) {
+    $scope.q = $scope.q || $location.search().q;
+
+    $http.get('/service/dragons?q=' + ($scope.q ? $scope.q : '')).success(function (data) {
         $scope.dragons = data;
     });
 
@@ -22,7 +29,17 @@ app.controller('homeController', function ($scope, $http) {
     }
 
     $scope.search = function () {
-        $http.get('/service/dragons?q=' + $('#txtKeyword').val()).success(function (data) {
+        // Reset any filter.
+        $scope.keyword = null;
+
+        // Set search term.
+        $scope.q = $('#txtKeyword').val();
+
+        // Update the url.
+        $location.search('q', $scope.q ? $scope.q : null);
+
+        // Render.
+        $http.get('/service/dragons?q=' + ($scope.q ? $scope.q : '')).success(function (data) {
             $scope.dragons = data;
         });
     }
