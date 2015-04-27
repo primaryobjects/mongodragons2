@@ -24,7 +24,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr data-ng-repeat='dragon in dragons | orderBy:sort'>
+            <tr data-ng-repeat='dragon in dragons | filter:keyword | orderBy:sort'>
                 <td>{{ dragon.Name }}</td>
                 <td>{{ dragon.Age }}</td>
                 <td>{{ dragon.Description }}</td>
@@ -41,5 +41,9 @@
 
     <p>
         <input type='button' value='Spawn' data-ng-click='spawn()' />
+        |
+        <input id="txtKeyword" type="text" style="width: 80px;" />
+        <input type='button' value='Search' data-ng-click='search()' />
+        <input type='button' value='Filter' data-ng-click='filter()'/>
     </p>
 </div>

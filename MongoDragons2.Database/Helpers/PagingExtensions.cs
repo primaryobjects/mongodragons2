@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MongoDB.Driver;
 
 namespace MongoDragons2.Database.Helpers
 {
@@ -25,6 +26,19 @@ namespace MongoDragons2.Database.Helpers
         public static IQueryable<TSource> Page<TSource>(IQueryable<TSource> source, int page, int pageSize)
         {
             return source.Skip((page - 1) * pageSize).Take(pageSize);
+        }
+
+        /// <summary>
+        /// Pages a MongoDb expression query to return just the subset of rows from the database. Use as follows:
+        /// </summary>
+        /// <typeparam name="TSource">Entity</typeparam>
+        /// <param name="source">MongoDb expression query</param>
+        /// <param name="page">Page Index</param>
+        /// <param name="pageSize">Number of Rows</param>
+        /// <returns>MongoCursor</returns>
+        public static MongoCursor<TSource> Page<TSource>(MongoCursor<TSource> source, int page, int pageSize)
+        {
+            return source.SetSkip((page - 1) * pageSize).SetLimit(pageSize);
         }
     }
 }

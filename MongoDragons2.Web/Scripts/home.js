@@ -20,4 +20,14 @@ app.controller('homeController', function ($scope, $http) {
             });
         }
     }
+
+    $scope.search = function () {
+        $http.get('/service/dragons?q=' + $('#txtKeyword').val()).success(function (data) {
+            $scope.dragons = data;
+        });
+    }
+
+    $scope.filter = function () {
+        $scope.keyword = { Name: $('#txtKeyword').val() };
+    }
 });

@@ -113,5 +113,18 @@ namespace MongoDragons2.Database.Concrete
 
             return count;
         }
+
+        /// <summary>
+        /// MongoDb query method for searching using the native MongoDb expression builder.
+        /// Example:
+        /// var query = Query.Matches("Name", new BsonRegularExpression(keyword, "i"));
+        /// var result = ((MongoDatabase<Person>)_db).Expression(query, SortBy.Descending("MyField"), 1, 100);
+        /// </summary>
+        public MongoCursor<T> Expression(IMongoQuery query, IMongoSortBy sort, int page, int pageSize)
+        {
+            var cursor = _collection.Find(query).SetSortOrder(sort);
+
+            return PagingExtensions.Page(cursor, page, pageSize);
+        }
     }
 }

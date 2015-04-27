@@ -11,9 +11,9 @@ namespace MongoDragons2.Web.Controllers
     public class ServiceController : Controller
     {
         [HttpGet]
-        public JsonResult Dragons()
+        public JsonResult Dragons(string q)
         {
-            IEnumerable<Dragon> dragons = DragonRepository.ToList();
+            IEnumerable<Dragon> dragons = string.IsNullOrEmpty(q) ? DragonRepository.ToList() : DragonRepository.Search(q);
 
             return Json(dragons, JsonRequestBehavior.AllowGet);
         }
