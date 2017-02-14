@@ -16,11 +16,11 @@ namespace MongoDragons2.Database.Concrete
     public class MongoDatabase<T> : IDatabase<T> where T : class, new()
     {
         private static string _connectionString = ConfigurationManager.ConnectionStrings["db"].ConnectionString;
-        private static MongoServer _server = new MongoClient(_connectionString).GetServer();
+        private static MongoClient _client = new MongoClient(_connectionString);
         private string _collectionName;
-        private MongoDatabase _db;
+        private IMongoDatabase _db;
 
-        protected MongoCollection<T> _collection
+        protected IMongoCollection<T> _collection
         {
             get
             {
@@ -47,7 +47,7 @@ namespace MongoDragons2.Database.Concrete
         public MongoDatabase(string collectionName)
         {
             _collectionName = collectionName;
-            _db = _server.GetDatabase(MongoUrl.Create(_connectionString).DatabaseName);
+            _db = _client.GetDatabase(MongoUrl.Create(_connectionString).DatabaseName);
         }
 
         public int Delete(System.Linq.Expressions.Expression<Func<T, bool>> expression)
@@ -69,12 +69,12 @@ namespace MongoDragons2.Database.Concrete
         public bool Delete(T item)
         {
             ObjectId id = new ObjectId(typeof(T).GetProperty("Id").GetValue(item, null).ToString());
-            var query = builder.Query.EQ("_id", id);
+            var filter = Builders<T>.Filter.Eq("Id", id);
 
             // Remove the object.
-            var result = _collection.Remove(query, RemoveFlags.Single);
+            var result = _collection.DeleteOne(filter);
 
-            return result.DocumentsAffected == 1;
+            return result.DeletedCount == 1;
         }
 
         public void DeleteAll()
@@ -94,24 +94,16 @@ namespace MongoDragons2.Database.Concrete
 
         public bool Add(T item)
         {
-            var result = _collection.Save(item);
+            _collection.InsertOne(item);
 
-            return result.Ok;
+            return true;
         }
 
         public int Add(IEnumerable<T> items)
         {
-            int count = 0;
+            _collection.InsertMany(items);
 
-            foreach (T item in items)
-            {
-                if (Add(item))
-                {
-                    count++;
-                }
-            }
-
-            return count;
+            return items.Count();
         }
     }
 }
